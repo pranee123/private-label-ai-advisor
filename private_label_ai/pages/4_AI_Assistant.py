@@ -10,14 +10,6 @@ if not DATA_PATH.exists():
     st.stop()
 df = pd.read_csv(DATA_PATH)
 
-PROJECT_ID = "gc-proj-aiml-dev-01fd"
-
-client = genai.Client(
-    vertexai=True,
-    project=PROJECT_ID,
-    location="us-east4"
-)
-
 st.title("🤖 Private Label AI Advisor")
 
 
