@@ -1,14 +1,11 @@
 import streamlit as st
 from google import genai
 
-# Pass the API key when creating the client.
-# For local testing you can replace the placeholder with your key.
-# For deployment, read it from an environment variable or Streamlit secrets.
-
-
+# Initialize Gemini client using Streamlit Secrets
 client = genai.Client(
     api_key=st.secrets["GEMINI_API_KEY"]
 )
+
 def ask_store_advisor(
     store_name,
     probability,
@@ -17,38 +14,39 @@ def ask_store_advisor(
     revenue,
     question
 ):
-
     prompt = f"""
-    You are a Private Label Sales Advisor for C&S Wholesale Grocers.
+You are a Private Label Sales Advisor.
 
-    Store Name:
-    {store_name}
+Store Name:
+{store_name}
 
-    Adoption Probability:
-    {probability:.2f}%
+Adoption Probability:
+{probability:.2f}%
 
-    Segment:
-    {segment}
+Segment:
+{segment}
 
-    Potential Revenue:
-    ${revenue:,.2f}
+Potential Revenue:
+${revenue:,.2f}
 
-    Recommended Products:
-    {products}
+Recommended Products:
+{products}
 
-    User Question:
-    {question}
+User Question:
+{question}
 
-    Explain:
-    1. Why the store should be targeted
-    2. What products should be pitched
-    3. Expected business impact
+Explain:
 
-    Keep response business friendly.
-    """
+1. Why this store should be targeted.
+2. Which products should be pitched.
+3. Expected business impact.
+4. Give actionable recommendations.
+
+Keep the response professional and business-friendly.
+"""
 
     response = client.models.generate_content(
-        model="gemini-2.5-pro",
+        model="gemini-2.5-flash",
         contents=prompt
     )
 
